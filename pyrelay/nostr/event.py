@@ -51,8 +51,11 @@ def range_dict(d: dict[str, range | int]) -> dict[str, int]:
 
     return new
 
+class EnumEventKind(enum.IntEnum):
+    def has(self, key) -> bool:
+        return key in self.__members__
 
-EventKind = enum.IntEnum("EventKind", range_dict(KINDS))  # type: ignore
+EventKind = EnumEventKind("EventKind", range_dict(KINDS))  # type: ignore
 
 
 def filter_none(attribute: attr.Attribute, value: Any) -> bool:

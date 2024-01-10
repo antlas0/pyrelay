@@ -51,7 +51,11 @@ class NostrFilter(NostrDataType):
     @classmethod
     def deserialize(cls, kwargs) -> Self:
         if "kinds" in kwargs:
-            kwargs["kinds"] = [EventKind(kind) for kind in kwargs["kinds"]]
+            kinds = []
+            for kind in kwargs["kinds"]:
+                if EventKind.has(kind):
+                    kinds.append(EventKind(kind))
+            kwargs["kinds"] = kinds
 
         generic_tags = {}
         kwargz = {}
